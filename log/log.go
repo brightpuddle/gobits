@@ -30,6 +30,15 @@ var (
 	With  = logger.With
 )
 
+var (
+	// Convenience shortcut for setting logging level
+	DebugLevel = zerolog.DebugLevel
+	InfoLevel  = zerolog.InfoLevel
+	WarnLevel  = zerolog.WarnLevel
+	ErrorLevel = zerolog.ErrorLevel
+	SetLevel   = zerolog.SetGlobalLevel
+)
+
 // New creates a new multi-level logger
 func New() Logger {
 	if testing.Testing() {
@@ -52,7 +61,7 @@ func New() Logger {
 
 func init() {
 	// defaults
-	zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 	zerolog.DurationFieldInteger = true
 }
