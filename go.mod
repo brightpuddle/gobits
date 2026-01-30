@@ -1,4 +1,4 @@
-module github.com/ciscotools/golibs
+module github.com/brightpuddle/gobits
 
 go 1.25.5
 
