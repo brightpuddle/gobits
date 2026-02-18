@@ -12,13 +12,18 @@ import (
 	"github.com/rs/zerolog/pkgerrors"
 )
 
-const logFile = "aci-vetr.log"
-
 // Logger aliases the zerolog.Logger
 type Logger = zerolog.Logger
 
+type Config struct {
+	File string
+}
+
 var (
-	logger = New()
+	DefaultConfig = Config{
+		File: "out.log",
+	}
+	logger = New(DefaultConfig)
 
 	// Convenience shortcuts for logging levels
 	Debug = logger.Debug
@@ -40,12 +45,13 @@ var (
 )
 
 // New creates a new multi-level logger
-func New() Logger {
+func New(cfg Config) Logger {
 	if testing.Testing() {
 		return zerolog.Nop()
 	}
+
 	// If filename is specified, open file and assume file logging
-	file, err := os.Create(logFile)
+	file, err := os.Create(cfg.File)
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to create log file")
 	}
